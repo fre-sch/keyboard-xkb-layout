@@ -34,12 +34,15 @@ if ! grep -q '<!-- redox-begin -->' "$XML"; then
     <!-- redox-end -->|' "$XML"
 fi
 
-# Sanity check: compile a full keymap with the new layout
+# Sanity check: compile a full keymap with the new layout.
+# Output goes to a temp file: xkbcomp may unlink and recreate its output path.
+TMP=$(mktemp)
+trap 'rm -f "$TMP"' EXIT
 printf 'xkb_keymap {
   xkb_keycodes { include "evdev+aliases(qwerty)" };
   xkb_types    { include "complete" };
   xkb_compat   { include "complete" };
   xkb_symbols  { include "pc+redox" };
-};\n' | xkbcomp -w 0 - -xkm /dev/null \
+};\n' | xkbcomp -w 0 - -xkm "$TMP" \
     && echo "Installed and compiles. Add 'English (Redox)' in KDE keyboard settings." \
     || { echo "Compile failed." >&2; exit 1; }
