@@ -1,0 +1,91 @@
+// Redox (VIA) approximation for ISO laptop keyboards.
+// Install as /usr/share/X11/xkb/symbols/redox
+//
+// Layers -> XKB levels:
+//   1 base           2 Shift
+//   3 AltGr (L1)     4 Shift+AltGr
+//   5 Caps  (L2)     6 Shift+Caps
+//
+// Not representable: thumb cluster, outer/inner columns, mouse keys,
+// layer 3, and all chords (Ctrl+C/V/X, Alt+Tab, Ctrl+Backspace).
+
+default partial alphanumeric_keys modifier_keys
+xkb_symbols "basic" {
+
+    include "us(basic)"
+    include "level3(ralt_switch)"
+
+    name[Group1] = "English (Redox)";
+
+    key.type[Group1] = "EIGHT_LEVEL";
+
+    // Caps Lock -> layer 2 (level 5 shift)
+    key <CAPS> { type[Group1] = "ONE_LEVEL", symbols[Group1] = [ ISO_Level5_Shift ] };
+    modifier_map Mod3 { <CAPS> };
+
+    // Number row: digits | AltGr: F1-F10 | Caps: digits (TRNS)
+    key <AE01> { [ 1, exclam,      F1,  F1,  1, exclam      ] };
+    key <AE02> { [ 2, at,          F2,  F2,  2, at          ] };
+    key <AE03> { [ 3, numbersign,  F3,  F3,  3, numbersign  ] };
+    key <AE04> { [ 4, dollar,      F4,  F4,  4, dollar      ] };
+    key <AE05> { [ 5, percent,     F5,  F5,  5, percent     ] };
+    key <AE06> { [ 6, asciicircum, F6,  F6,  6, asciicircum ] };
+    key <AE07> { [ 7, ampersand,   F7,  F7,  7, ampersand   ] };
+    key <AE08> { [ 8, asterisk,    F8,  F8,  8, asterisk    ] };
+    key <AE09> { [ 9, parenleft,   F9,  F9,  9, parenleft   ] };
+    key <AE10> { [ 0, parenright,  F10, F10, 0, parenright  ] };
+
+    // Inner-column extras: AltGr+Esc = F11, AltGr+Delete = F12
+    key <ESC>  { [ Escape, Escape, F11, F11, Escape, Escape ] };
+    key <DELE> { [ Delete, Delete, F12, F12, Delete, Delete ] };
+
+    // ---- Left half ----
+    // Top row
+    key <AD01> { [ backslash, bar,     plus,        plus,        backslash,  bar        ] };
+    key <AD02> { [ comma,     less,    semicolon,   colon,       numbersign, numbersign ] };
+    key <AD03> { [ period,    greater, colon,       colon,       at,         at         ] };
+    key <AD04> { [ p,         P,       bracketleft, braceleft,   exclam,     exclam     ] };
+    key <AD05> { [ y,         Y,       bracketright,braceright,  VoidSymbol, VoidSymbol ] };
+    // Home row
+    key <AC01> { [ a, A, underscore, underscore, a,           A           ] };
+    key <AC02> { [ o, O, equal,      plus,       asciicircum, asciicircum ] };
+    key <AC03> { [ e, E, quotedbl,   quotedbl,   percent,     percent     ] };
+    key <AC04> { [ i, I, parenleft,  parenleft,  dollar,      dollar      ] };
+    key <AC05> { [ u, U, parenright, parenright, VoidSymbol,  VoidSymbol  ] };
+    // Bottom row
+    key <AB01> { [ slash, question, minus,      underscore, slash,      question   ] };
+    key <AB02> { [ q,     Q,        grave,      asciitilde, q,          Q          ] };
+    key <AB03> { [ j,     J,        apostrophe, quotedbl,   asterisk,   asterisk   ] };
+    key <AB04> { [ k,     K,        braceleft,  braceleft,  ampersand,  ampersand  ] };
+    key <AB05> { [ x,     X,        braceright, braceright, VoidSymbol, VoidSymbol ] };
+
+    // ---- Right half ----
+    // Top row
+    key <AD06> { [ f, F, Home,   Home,   XF86AudioRaiseVolume, XF86AudioRaiseVolume ] };
+    key <AD07> { [ g, G, Up,     Up,     1,                    exclam               ] };
+    key <AD08> { [ c, C, Down,   Down,   2,                    at                   ] };
+    key <AD09> { [ t, T, Prior,  Prior,  3,                    numbersign           ] };
+    key <AD10> { [ z, Z, KP_Add, KP_Add, XF86AudioStop,        XF86AudioStop        ] };
+    // Home row
+    key <AC06> { [ h, H, End,         End,         XF86AudioLowerVolume, XF86AudioLowerVolume ] };
+    key <AC07> { [ d, D, Left,        Left,        4,                    dollar               ] };
+    key <AC08> { [ r, R, Right,       Right,       5,                    percent              ] };
+    key <AC09> { [ n, N, Next,        Next,        6,                    asciicircum          ] };
+    key <AC10> { [ s, S, KP_Subtract, KP_Subtract, XF86AudioPlay,        XF86AudioPlay        ] };
+    // Bottom row
+    key <AB06> { [ b, B, VoidSymbol, VoidSymbol, XF86AudioMute, XF86AudioMute ] };
+    key <AB07> { [ m, M, VoidSymbol, VoidSymbol, 7,             ampersand     ] };
+    key <AB08> { [ w, W, VoidSymbol, VoidSymbol, 8,             asterisk      ] };
+    key <AB09> { [ v, V, VoidSymbol, VoidSymbol, 9,             parenleft     ] };
+    key <AB10> { [ l, L, VoidSymbol, VoidSymbol, 0,             parenright    ] };
+
+    // ---- Leftover keys: disabled ----
+    key <TLDE> { type[Group1] = "ONE_LEVEL", symbols[Group1] = [ VoidSymbol ] };
+    key <AE11> { type[Group1] = "ONE_LEVEL", symbols[Group1] = [ VoidSymbol ] };
+    key <AE12> { type[Group1] = "ONE_LEVEL", symbols[Group1] = [ VoidSymbol ] };
+    key <AD11> { type[Group1] = "ONE_LEVEL", symbols[Group1] = [ VoidSymbol ] };
+    key <AD12> { type[Group1] = "ONE_LEVEL", symbols[Group1] = [ VoidSymbol ] };
+    key <AC11> { type[Group1] = "ONE_LEVEL", symbols[Group1] = [ VoidSymbol ] };
+    key <BKSL> { type[Group1] = "ONE_LEVEL", symbols[Group1] = [ VoidSymbol ] };
+    key <LSGT> { type[Group1] = "ONE_LEVEL", symbols[Group1] = [ VoidSymbol ] };
+};
